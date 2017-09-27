@@ -2,7 +2,7 @@ version: '2'
 services:
   jenkins-master:
     image: reg.cnrancher.com/pipeline/jenkins:2.60.2_tool
-    {{- if ne .Values.JENKINS_PORT "0" }}
+    {{- if ne .Values.JENKINS_PORT "" }}
     ports:
       - ${JENKINS_PORT}:8080
     {{- end }}
