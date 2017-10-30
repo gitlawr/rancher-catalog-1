@@ -19,14 +19,6 @@ catalog:
       type: "int"
       label: "Jenkins Public Port"
       description: "Public port for Jenkins master's http port.for DEBUG purpose,remove when release."
-    - variable: VOLUME_DRIVER 
-      description: "Volume driver to use for jenkins home volume"
-      label: "Volume driver"
-      required: true
-      default: "local"
-      type: enum
-      options:
-        - local
     - variable: HOST_LABEL
       label: "Host with Label to put pipeline components on"
       description: |
