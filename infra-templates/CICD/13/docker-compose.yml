@@ -40,7 +40,7 @@ services:
       - JENKINS_PASSWORD=admin
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - jenkins_home:/var/jenkins_home
+      - /var/jenkins_home
     labels:
       io.rancher.scheduler.affinity:container_label_soft_ne: io.rancher.stack_service.name=$${stack_name}/$${service_name}
       io.rancher.container.create_agent: true
