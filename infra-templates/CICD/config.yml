@@ -1,7 +1,6 @@
 name: CICD # Name of the Catalog Entry
-description: Rancher CICD Dev Version
+description: (Experimental) Rancher CICD
   # Description of the Catalog Entry
-version: 0.6.0 # Version of the Catalog to be used
-category: Infra # Category to be used for searching catalog entries
-maintainer: Aaron # The maintainer of the catalog entry
-license: MIT # The license
+version: 0.1.0 # Version of the Catalog to be used
+category: Continuous Integration # Category to be used for searching catalog entries
+Support: Maintained by community members # The maintainer of the catalog entry
