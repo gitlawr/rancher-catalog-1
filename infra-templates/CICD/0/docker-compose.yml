@@ -1,7 +1,7 @@
 version: '2'
 services:
   jenkins-master:
-    image: reg.cnrancher.com/pipeline/jenkins:0.1.0
+    image: reg.cnrancher.com/pipeline/jenkins:dev
     {{- if ne .Values.JENKINS_PORT "" }}
     ports:
       - ${JENKINS_PORT}:8080
@@ -29,7 +29,7 @@ services:
       io.rancher.container.start_once: true
   {{- if ne .Values.SLAVES "0" }}
   jenkins-slave:
-    image: reg.cnrancher.com/pipeline/jenkins-slave:0.1.0
+    image: reg.cnrancher.com/pipeline/jenkins-slave:dev
     restart: always
     links:
       - jenkins-master
@@ -50,7 +50,7 @@ services:
   {{- end }}
   {{- end }}
   pipeline-server:
-    image: reg.cnrancher.com/rancher/pipeline:0.1.0
+    image: reg.cnrancher.com/rancher/pipeline:dev
     restart: always
     links:
       - jenkins-master
@@ -65,7 +65,7 @@ services:
       io.rancher.scheduler.affinity:host_label: ${HOST_LABEL}
   {{- end }}
   pipeline-ui:
-    image: reg.cnrancher.com/pipeline/ui:v1.0_dev
+    image: reg.cnrancher.com/pipeline/ui:v1.0_11.24
     restart: always
     labels:
       io.rancher.container.create_agent: true
