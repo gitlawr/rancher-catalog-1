@@ -1,4 +1,4 @@
 name: Rancher Pipeline 
 description: (Experimental) Rancher CI service
-version: 0.1.1 
+version: 0.0.1-dev 
 category: Continuous Integration 

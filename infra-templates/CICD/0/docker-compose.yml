@@ -63,7 +63,7 @@ services:
       io.rancher.scheduler.affinity:host_label: ${HOST_LABEL}
   {{- end }}
   pipeline-ui:
-    image: reg.cnrancher.com/pipeline/ui:v1.0_11.24
+    image: reg.cnrancher.com/pipeline/ui:v1.0_dev
     restart: always
     labels:
       io.rancher.container.create_agent: true

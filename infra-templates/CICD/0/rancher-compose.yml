@@ -7,9 +7,9 @@ catalog:
   questions:
     - variable: SLAVES
       type: "int"
-      default: "0"
+      default: "1"
       label: "# of slaves"
-      description: "How many jenkins slaves to run ci tasks."
+      description: "How many jenkins slaves to run ci tasks. At least 1."
     - variable: EXECUTORS
       type: "int"
       default: "2"
