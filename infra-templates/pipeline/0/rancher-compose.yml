@@ -1,20 +1,24 @@
 version: '2'
 catalog:
   name: CICD
-  version: 0.1.0
+  version: 0.1.5
   description: "Rancher CICD"
-  minimum_rancher_version: v1.6.8
+  upgrade_from: "<=0.4.0"
   questions:
     - variable: SLAVES
       type: "int"
-      default: "0"
+      default: "1"
       label: "# of slaves"
-      description: "How many jenkins slaves to run ci tasks."
+      description: "How many jenkins slaves to run ci tasks. At least 1."
     - variable: EXECUTORS
       type: "int"
       default: "2"
       label: "# of executors"
       description: "How many executors on a jenkins slave"
+    - variable: JENKINS_PORT
+      type: "int"
+      label: "Jenkins Public Port"
+      description: "Public port for Jenkins master's http port.for DEBUG purpose,remove when release."
     - variable: HOST_LABEL
       label: "Host with Label to put pipeline components on"
       description: |
@@ -24,7 +28,9 @@ catalog:
       default: ""
       type: "string"
 services:
-#{{- if ne .Values.SLAVES "0" }} 
   jenkins-slave:
+#{{- if ge .Values.SLAVES "1" }}
     scale: ${SLAVES}
-#{{- end }} 
+#{{- else }}
+    scale: 1
+#{{- end }}

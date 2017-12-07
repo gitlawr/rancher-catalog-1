@@ -1,15 +1,17 @@
 version: '2'
 services:
   jenkins-master:
-    image: reg.cnrancher.com/pipeline/jenkins:0.1.0
+    image: lawr/jenkins:2.60.2-alpine
+    {{- if ne .Values.JENKINS_PORT "" }}
+    ports:
+      - ${JENKINS_PORT}:8080
+    {{- end }}
     restart: always
     environment:
       - JENKINS_SLAVE_AGENT_PORT=50000
       - JENKINS_HOME=/var/jenkins_home
     volumes_from:
       - jenkins-boot
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
     labels:
       io.rancher.sidekicks: jenkins-boot
       io.rancher.container.create_agent: true
@@ -18,14 +20,13 @@ services:
       io.rancher.scheduler.affinity:host_label: ${HOST_LABEL}
   {{- end }}
   jenkins-boot:
-    image: reg.cnrancher.com/pipeline/jenkins_home:2.0.6.2_3
+    image: lawr/jenkins_home:2.60.2_0
     volumes:
       - jenkins_home:/var/jenkins_home
     labels:
       io.rancher.container.start_once: true
-  {{- if ne .Values.SLAVES "0" }}
   jenkins-slave:
-    image: reg.cnrancher.com/pipeline/jenkins-slave:0.1.0
+    image: lawr/jenkins-slave:0.1.0
     restart: always
     links:
       - jenkins-master
@@ -44,9 +45,8 @@ services:
   {{- if ne .Values.HOST_LABEL "" }}
       io.rancher.scheduler.affinity:host_label: ${HOST_LABEL}
   {{- end }}
-  {{- end }}
   pipeline-server:
-    image: reg.cnrancher.com/rancher/pipeline:0.1.0
+    image: lawr/pipeline:0.1.5
     restart: always
     links:
       - jenkins-master
@@ -56,16 +56,18 @@ services:
       - JENKINS_TOKEN=admin
     labels:
       io.rancher.container.create_agent: true
-      io.rancher.container.agent.role: environment
+      io.rancher.container.agent.role: environmentAdmin
   {{- if ne .Values.HOST_LABEL "" }}
       io.rancher.scheduler.affinity:host_label: ${HOST_LABEL}
   {{- end }}
   pipeline-ui:
-    image: reg.cnrancher.com/pipeline/ui:v1.0_dev
+    image: reg.cnrancher.com/pipeline/ui:v1.0
     restart: always
     labels:
       io.rancher.container.create_agent: true
       io.rancher.container.agent.role: environment
+      io.rancher.service.ui_link.label: "{\"en-us\":\"PIPELINE\",\"zh-hans\":\"流水线\"}"
+      io.rancher.service.ui_link.port: 8000
   {{- if ne .Values.HOST_LABEL "" }}
       io.rancher.scheduler.affinity:host_label: ${HOST_LABEL}
   {{- end }}
